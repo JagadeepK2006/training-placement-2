@@ -1,0 +1,30 @@
+class Solution {
+    public void reorderList(ListNode head) {
+
+        if (head == null || head.next == null) return;
+        
+        ListNode slow = head, fast = head.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        ListNode first = head, second = slow.next, prev = slow.next = null;
+        while (second != null) {
+            ListNode tmp = second.next;
+            second.next = prev;
+            prev = second;
+            second = tmp;
+        }
+
+        second = prev;
+        while (second != null) {
+            ListNode t1 = first.next;
+            ListNode t2 = second.next;
+            first.next = second;
+            second.next = t1;
+            first = t1;
+            second = t2;
+        }
+    }
+}
